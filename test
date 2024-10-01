@@ -1,5 +1,5 @@
-Makefile
 includes
+Makefile
 obj
 pipex
 srcs
