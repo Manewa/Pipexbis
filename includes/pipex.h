@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:44:38 by namalier          #+#    #+#             */
-/*   Updated: 2024/09/27 22:13:56 by natgomali        ###   ########.fr       */
+/*   Updated: 2024/10/01 18:12:19 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ int		main(int argc, char **argv, char **envp);
 
 /*********		access_cmd2		*********/
 
-list	*full_path_cmd(list *cmd, char **cmd_n_flags);
+t_cmd	*full_path_cmd(t_cmd *cmd, char **cmd_n_flags);
 char	*ft_cpypath(char *argv, char *path);
-char	*try_access(t_data *data, list *cmd, char *cmd_no_flag);
-int		name_only_cmd(t_data *data, list *cmd, char **cmd_n_flags);
-list	*create_node(char *argv, t_data *data);
-void	access_cmd(t_data *data, char **argv, list **head);
-
+char	*try_access(t_data *data, t_cmd *cmd, char *cmd_no_flag);
+int		name_only_cmd(t_data *data, t_cmd *cmd, char **cmd_n_flags);
+t_cmd	*create_node(char *argv, t_data *data);
+void	access_cmd(t_data *data, char **argv, t_cmd **head);
 
 /*********		access_files	*********/
 
@@ -42,23 +41,23 @@ void	access_input(t_data *data, char *argv);
 
 void	ft_free_error(t_data *data);
 void	ft_free_fds(int *pipefd, t_data *data);
-void	ft_free_both(t_data *data, list *cmd, int *pipefd);
+void	ft_free_both(t_data *data, t_cmd *cmd, int *pipefd, int end);
 
 /*********		lst				**********/
 
-void	pipex_lstadd_back(list **lst, list *new);
-list	*pipex_lstlast(list *lst);
-void	pipex_lstfree(list **head);
+void	pipex_lstadd_back(t_cmd **lst, t_cmd *new);
+t_cmd	*pipex_lstlast(t_cmd *lst);
+void	pipex_lstfree(t_cmd **head);
 
 /*********		forking			**********/
 
 void	parent_process(int *pipefd);
-void	child_process(t_data *data, list *cmd, int *pipefd, char **envp);
-void	fork_n_pipe(t_data *data, list **cmd, char **envp);
+void	child_process(t_data *data, t_cmd *cmd, int *pipefd, char **envp);
+void	fork_n_pipe(t_data *data, t_cmd **cmd, char **envp);
 
 /*********		try_access		*********/
 
-void	init_input(t_data *data, list *cmdp, int *pipefd);
-void	init_output(t_data *data, list *cmd, int *pipefd, int output_fd);
+void	init_input(t_data *data, t_cmd *cmdp, int *pipefd);
+void	init_output(t_data *data, t_cmd *cmd, int *pipefd, int output_fd);
 
-# endif
+#endif

@@ -6,26 +6,13 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:04:52 by namalier          #+#    #+#             */
-/*   Updated: 2024/09/27 22:14:13 by natgomali        ###   ########.fr       */
+/*   Updated: 2024/10/01 18:59:10 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-// Full Path et name_only permettent de faire un char ** avec 
-// 1) le path + nom sur pathcmd
-// 2) seulement le nom et les flags ensuite sur cmd_flag
-//
-// Full path requiert un path entier en argument (/usr/bin/ls)
-// name only ne prend que le "ls"
-//
-// pathcmd et cmd_flag sont donc parse pour etre utilisables avec execve
-// Pour l'instant, seule la premiere node de la liste (premiere commande) ne peut etre recupere
-// Il faut faire la meme avec les suivantes (Fait depuis le while dans access_cmd)
-//
-// AUCUNE ERREUR N'EST VRAIMENT BIEN GERE NI LEAKS NI MOTS D'ERREUR
-
-list	*full_path_cmd(list *cmd, char **cmd_n_flags)
+t_cmd	*full_path_cmd(t_cmd *cmd, char **cmd_n_flags)
 {
 	char	**only_cmd;
 	size_t	i;
@@ -56,26 +43,26 @@ char	*ft_cpypath(char *argv, char *path)
 {
 	size_t	i;
 	size_t	j;
-	char	*Cpath;
+	char	*cpath;
 
 	i = 0;
 	j = 0;
-	Cpath = malloc((ft_strlen(argv) + ft_strlen(path) + 2) * sizeof(char));
-	if (!Cpath)
-		return(NULL);
+	cpath = malloc((ft_strlen(argv) + ft_strlen(path) + 2) * sizeof(char));
+	if (!cpath)
+		return (NULL);
 	while (path[i])
 	{
-		Cpath[i] = path[i];
+		cpath[i] = path[i];
 		i++;
 	}
-	Cpath[i++] = '/';
+	cpath[i++] = '/';
 	while (argv[j])
-		Cpath[i++] = argv[j++];
-	Cpath[i] = '\0';
-	return (Cpath);
+		cpath[i++] = argv[j++];
+	cpath[i] = '\0';
+	return (cpath);
 }
 
-char	*try_access(t_data *data, list *cmd, char *cmd_no_flag)
+char	*try_access(t_data *data, t_cmd *cmd, char *cmd_no_flag)
 {
 	size_t	i;
 
@@ -84,7 +71,7 @@ char	*try_access(t_data *data, list *cmd, char *cmd_no_flag)
 	{
 		cmd->pathcmd = ft_cpypath(cmd_no_flag, data->path[i]);
 		if (!(cmd->pathcmd))
-			ft_free_both(data, cmd, NULL);
+			ft_free_both(data, cmd, NULL, 0);
 		if (access(cmd->pathcmd, F_OK | X_OK) == -1)
 		{
 			free(cmd->pathcmd);
@@ -94,10 +81,10 @@ char	*try_access(t_data *data, list *cmd, char *cmd_no_flag)
 			return (cmd->pathcmd);
 	}
 	ft_printf("Error\nCommand not found");
-	exit(2);
+	return (NULL);
 }
 
-int	name_only_cmd(t_data *data, list *cmd, char **cmd_n_flags)
+int	name_only_cmd(t_data *data, t_cmd *cmd, char **cmd_n_flags)
 {
 	size_t	i;
 
@@ -113,9 +100,9 @@ int	name_only_cmd(t_data *data, list *cmd, char **cmd_n_flags)
 	return (1);
 }
 
-list	*create_node(char *argv, t_data *data)
+t_cmd	*create_node(char *argv, t_data *data)
 {
-	list	*node;
+	t_cmd	*node;
 	char	**cmd_n_flags;
 
 	cmd_n_flags = ft_split(argv, ' ');
@@ -138,23 +125,28 @@ list	*create_node(char *argv, t_data *data)
 		if (name_only_cmd(data, node, cmd_n_flags) == 0)
 			return (ft_free_doubletab(cmd_n_flags));
 	ft_free_doubletab(cmd_n_flags);
-	return (node);	
+	return (node);
 }
 
-void	access_cmd(t_data *data, char **argv, list **head)
+void	access_cmd(t_data *data, char **argv, t_cmd **head)
 {
 	size_t	i;
-	list	*add;
+	t_cmd	*add;
 
 	i = 3;
+	free(*head);
 	(*head) = create_node(argv[2], data);
 	if (!(*head))
+	{
+		ft_free_fds(NULL, data);
 		ft_free_error(data);
+	}
 	while (argv[i + 1])
 	{
 		add = create_node(argv[i], data);
 		if (!add)
-			ft_free_both(data, (*head), NULL);
+			ft_free_both(data, (*head), NULL, 0);
+		add->head = *head;
 		pipex_lstadd_back(head, add);
 		i++;
 	}

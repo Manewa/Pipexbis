@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namalier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:18:10 by namalier          #+#    #+#             */
-/*   Updated: 2024/09/27 19:22:26 by natgomali        ###   ########.fr       */
+/*   Updated: 2024/10/01 18:24:08 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	ft_free_error(t_data *data)
 {
-
 	if (data->path)
 		ft_free_doubletab(data->path);
 	ft_printf("Error\n");
 	exit(2);
-
 }
 
 void	ft_free_fds(int *pipefd, t_data *data)
@@ -33,13 +31,13 @@ void	ft_free_fds(int *pipefd, t_data *data)
 	close(data->output_fd);
 }
 
-void	ft_free_both(t_data *data, list *cmd, int *pipefd)
+void	ft_free_both(t_data *data, t_cmd *cmd, int *pipefd, int end)
 {
-	if (pipefd)
+	if (data->input_fd)
 		ft_free_fds(pipefd, data);
-	if (data)
+	if (data->path)
 		ft_free_doubletab(data->path);
-	if (cmd)
-		pipex_lstfree(&cmd);
-	exit(2);
+	pipex_lstfree(&cmd);
+	if (end == 0)
+		exit(2);
 }

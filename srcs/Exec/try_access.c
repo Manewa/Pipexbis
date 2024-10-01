@@ -1,23 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   try_access.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/01 18:14:13 by namalier          #+#    #+#             */
+/*   Updated: 2024/10/01 18:59:14 by namalier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/pipex.h"
 
-void	init_output(t_data *data, list *cmd, int *pipefd, int output_fd)
+void	init_output(t_data *data, t_cmd *cmd, int *pipefd, int output_fd)
 {
 	if (dup2(output_fd, STDOUT_FILENO) < 0)
 	{
 		ft_printf("Error : %s\n", strerror(errno));
-		ft_free_both(data, cmd, pipefd);
+		ft_free_both(data, cmd, pipefd, 0);
 	}
-	if (pipefd[1] != output_fd)
-		close(pipefd[1]);
+	close(pipefd[1]);
 }
 
-void	init_input(t_data *data, list *cmd, int *pipefd)
+void	init_input(t_data *data, t_cmd *cmd, int *pipefd)
 {
 	if (dup2(data->input_fd, STDIN_FILENO) < 0)
 	{
 		ft_printf("Error : %s\n", strerror(errno));
-		ft_free_both(data, cmd, pipefd);
+		ft_free_both(data, cmd, pipefd, 0);
 	}
-	close(data->input_fd);
 	close(pipefd[0]);
 }

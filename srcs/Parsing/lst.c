@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namalier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/01 18:24:19 by namalier          #+#    #+#             */
+/*   Updated: 2024/10/01 18:24:31 by namalier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-void	pipex_lstadd_back(list **lst, list *new)
+void	pipex_lstadd_back(t_cmd **lst, t_cmd *new)
 {
-	list	*tmp;
+	t_cmd	*tmp;
 
 	if (!new)
 		return ;
@@ -16,7 +27,7 @@ void	pipex_lstadd_back(list **lst, list *new)
 	pipex_lstlast(tmp)->next = new;
 }
 
-list	*pipex_lstlast(list *lst)
+t_cmd	*pipex_lstlast(t_cmd *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -25,9 +36,9 @@ list	*pipex_lstlast(list *lst)
 	return (lst);
 }
 
-void	pipex_lstfree(list **head)
+void	pipex_lstfree(t_cmd **head)
 {
-	list	*tmp;
+	t_cmd	*tmp;
 
 	while (*head)
 	{
