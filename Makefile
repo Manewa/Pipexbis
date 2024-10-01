@@ -6,7 +6,7 @@
 #    By: namalier <namalier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/11 16:29:28 by namalier          #+#    #+#              #
-#    Updated: 2024/09/25 23:41:40 by natgomali        ###   ########.fr        #
+#    Updated: 2024/10/01 19:57:12 by namalier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ EXEC			= srcs/Exec
 OBJDIR 			= obj
 LIBA			= includes/Libft/libft.a
 
-SRCS 			=	srcs/pipex.c ${PARSING}/ft_error.c ${PARSING}/access_cmd2.c\
+SRCS 			=	srcs/pipex.c ${PARSING}/ft_error.c ${PARSING}/access_cmd.c\
 					${PARSING}/access_files.c ${PARSING}/lst.c \
-					${EXEC}/forking.c ${EXEC}/try_access.c \
+					${PARSING}/get_path.c ${PARSING}/try_access.c \
+					${EXEC}/forking.c ${EXEC}/init.c \
 
 OBJS 			=	$(patsubst %.c,${OBJDIR}/%.o,$(notdir ${SRCS}))
 

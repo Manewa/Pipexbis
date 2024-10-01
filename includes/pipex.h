@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:44:38 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 18:12:19 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:01:15 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 /*********		pipex			*********/
 
+void	init_no_path(t_data *data, char **argv);
 void	get_path(char **envp, t_data *data);
 int		max_arg_double(char **argv);
 int		main(int argc, char **argv, char **envp);
@@ -52,8 +53,8 @@ void	pipex_lstfree(t_cmd **head);
 /*********		forking			**********/
 
 void	parent_process(int *pipefd);
-void	child_process(t_data *data, t_cmd *cmd, int *pipefd, char **envp);
-void	fork_n_pipe(t_data *data, t_cmd **cmd, char **envp);
+void	child_process(t_data *data, t_cmd *cmd, int *pipefd);
+void	fork_n_pipe(t_data *data, t_cmd **cmd);
 
 /*********		try_access		*********/
 

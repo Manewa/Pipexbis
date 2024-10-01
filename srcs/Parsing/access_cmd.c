@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   access_cmd2.c                                      :+:      :+:    :+:   */
+/*   access_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:04:52 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 18:59:10 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:58:24 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,6 @@ char	*ft_cpypath(char *argv, char *path)
 		cpath[i++] = argv[j++];
 	cpath[i] = '\0';
 	return (cpath);
-}
-
-char	*try_access(t_data *data, t_cmd *cmd, char *cmd_no_flag)
-{
-	size_t	i;
-
-	i = 0;
-	while (data->path[i])
-	{
-		cmd->pathcmd = ft_cpypath(cmd_no_flag, data->path[i]);
-		if (!(cmd->pathcmd))
-			ft_free_both(data, cmd, NULL, 0);
-		if (access(cmd->pathcmd, F_OK | X_OK) == -1)
-		{
-			free(cmd->pathcmd);
-			i++;
-		}
-		else
-			return (cmd->pathcmd);
-	}
-	ft_printf("Error\nCommand not found");
-	return (NULL);
 }
 
 int	name_only_cmd(t_data *data, t_cmd *cmd, char **cmd_n_flags)

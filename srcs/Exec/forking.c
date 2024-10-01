@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:14:39 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 18:58:03 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:13:58 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	first_arg(t_data *data, t_cmd *cmd, int *pipefd)
 	close(data->output_fd);
 }
 
-void	child_process(t_data *data, t_cmd *cmd, int *pipefd, char **envp)
+void	child_process(t_data *data, t_cmd *cmd, int *pipefd)
 {
 	if (cmd->pathcmd && access(cmd->pathcmd, F_OK | X_OK) == 0)
 	{
@@ -43,7 +43,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *pipefd, char **envp)
 			first_arg(data, cmd, pipefd);
 		else
 			last_arg(data, cmd, pipefd);
-		if (execve(cmd->pathcmd, cmd->cmd_flag, envp) == -1)
+		if (execve(cmd->pathcmd, cmd->cmd_flag, NULL) == -1)
 			ft_free_both(data, cmd, NULL, 0);
 	}
 	else if (cmd->next)
@@ -58,7 +58,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *pipefd, char **envp)
 	}
 }
 
-void	fork_n_pipe(t_data *data, t_cmd **cmd, char **envp)
+void	fork_n_pipe(t_data *data, t_cmd **cmd)
 {
 	int		pipefd[2];
 	int		pid;
@@ -75,7 +75,7 @@ void	fork_n_pipe(t_data *data, t_cmd **cmd, char **envp)
 			ft_free_both(data, *cmd, pipefd, 0);
 		else if (pid == 0)
 		{
-			child_process(data, *cmd, pipefd, envp);
+			child_process(data, *cmd, pipefd);
 		}
 		else
 			parent_process(pipefd);
