@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:44:38 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 20:01:15 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:49:11 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,9 @@ void	fork_n_pipe(t_data *data, t_cmd **cmd);
 
 void	init_input(t_data *data, t_cmd *cmdp, int *pipefd);
 void	init_output(t_data *data, t_cmd *cmd, int *pipefd, int output_fd);
+
+/**********		cmd_n_flags		**********/
+
+char **check_cmd_n_flags(char *argv);
 
 #endif

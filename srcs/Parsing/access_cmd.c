@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:04:52 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 19:58:24 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:49:01 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_cmd	*create_node(char *argv, t_data *data)
 	t_cmd	*node;
 	char	**cmd_n_flags;
 
-	cmd_n_flags = ft_split(argv, ' ');
+	cmd_n_flags = check_cmd_n_flags(argv);
 	if (!cmd_n_flags)
 		return (NULL);
 	node = malloc(sizeof(*node));
@@ -91,9 +91,9 @@ t_cmd	*create_node(char *argv, t_data *data)
 		return (ft_free_doubletab(cmd_n_flags));
 	node->next = NULL;
 	node->cmd_flag = malloc((max_arg_double(cmd_n_flags) + 1) * sizeof(char *));
-	node->cmd_flag[max_arg_double(cmd_n_flags)] = NULL;
 	if (!(node->cmd_flag))
 		return (ft_free_doubletab(cmd_n_flags));
+	node->cmd_flag[max_arg_double(cmd_n_flags)] = NULL;
 	if (ft_strchr(cmd_n_flags[0], '/'))
 	{
 		if (!(full_path_cmd(node, cmd_n_flags)))
