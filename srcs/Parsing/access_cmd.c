@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:04:52 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/02 15:49:01 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:01:30 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@ t_cmd	*full_path_cmd(t_cmd *cmd, char **cmd_n_flags)
 
 	cmd->pathcmd = ft_strdup(cmd_n_flags[0]);
 	if (!(cmd->pathcmd))
-		return (ft_free_doubletab(cmd_n_flags));
+		return (NULL);
 	only_cmd = ft_split(cmd->pathcmd, '/');
 	if (!only_cmd)
-		return (ft_free_doubletab(cmd_n_flags));
+		return (NULL);
+	if (!only_cmd[0])
+		return (free(only_cmd), NULL);
 	i = max_arg_double(only_cmd) - 1;
 	cmd->cmd_flag[0] = ft_strdup(only_cmd[i]);
 	if (!(cmd->cmd_flag[0]))
-		return (ft_free_doubletab(cmd_n_flags));
+		return (NULL);
 	i = 1;
 	while (cmd_n_flags[i])
 	{
 		cmd->cmd_flag[i] = ft_strdup(cmd_n_flags[i]);
 		if (!(cmd->cmd_flag[i]))
-			return (ft_free_doubletab(cmd_n_flags));
+			return (NULL);
 		i++;
 	}
 	ft_free_doubletab(only_cmd);

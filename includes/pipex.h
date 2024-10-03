@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:44:38 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/02 15:49:11 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:20:16 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	init_output(t_data *data, t_cmd *cmd, int *pipefd, int output_fd);
 
 /**********		cmd_n_flags		**********/
 
-char **check_cmd_n_flags(char *argv);
+char	**check_cmd_n_flags(char *argv);
 
 #endif
