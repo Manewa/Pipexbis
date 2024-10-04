@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:19:36 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/01 19:59:48 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:58:13 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,4 @@ void	access_input(t_data *data, char *argv)
 		ft_free_error(data);
 	if (data->input_fd == -1)
 		ft_free_error(data);
-}
-
-void	pipex_lstfree(t_cmd **head)
-{
-	t_cmd	*tmp;
-
-	while (*head)
-	{
-		tmp = (*head)->next;
-		ft_free_doubletab((*head)->cmd_flag);
-		free((*head)->pathcmd);
-		free(*head);
-		*head = tmp;
-	}
-	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:14:39 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/03 18:29:13 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:03:31 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *pipefd)
 		else
 			last_arg(data, cmd, pipefd);
 		if (execve(cmd->pathcmd, cmd->cmd_flag, NULL) == -1)
-			ft_free_both(data, cmd, NULL, 0);
+			ft_free_both(data, cmd->head, NULL, 0);
 	}
 	else if (cmd->next)
 	{	

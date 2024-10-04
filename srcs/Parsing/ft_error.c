@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:18:10 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/03 18:17:45 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:34:10 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_free_error(t_data *data)
 	}
 	else
 		write (2, "Wrong args or malloc\n", 21);
-	exit(2);
+	exit(3);
 }
 
 void	ft_free_fds(int *pipefd, t_data *data)
@@ -52,5 +52,20 @@ void	ft_free_both(t_data *data, t_cmd *cmd, int *pipefd, int end)
 		write (2, "\n", 1);
 	}
 	if (end == 0)
-		exit(2);
+		exit(3);
+}
+
+void	pipex_lstfree(t_cmd **head)
+{
+	t_cmd	*tmp;
+
+	while (*head)
+	{
+		tmp = (*head)->next;
+		ft_free_doubletab((*head)->cmd_flag);
+		free((*head)->pathcmd);
+		free(*head);
+		*head = tmp;
+	}
+	return ;
 }

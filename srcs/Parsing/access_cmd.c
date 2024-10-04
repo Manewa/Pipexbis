@@ -6,7 +6,7 @@
 /*   By: namalier <namalier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:04:52 by namalier          #+#    #+#             */
-/*   Updated: 2024/10/03 19:01:30 by namalier         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:01:36 by namalier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,13 @@ void	access_cmd(t_data *data, char **argv, t_cmd **head)
 	t_cmd	*add;
 
 	i = 3;
-	free(*head);
 	(*head) = create_node(argv[2], data);
 	if (!(*head))
 	{
 		ft_free_fds(NULL, data);
 		ft_free_error(data);
 	}
+	(*head)->head = *head;
 	while (argv[i + 1])
 	{
 		add = create_node(argv[i], data);
